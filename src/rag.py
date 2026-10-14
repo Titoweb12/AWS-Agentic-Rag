@@ -86,3 +86,4 @@ while True:
     print("\nChunks retrouvés :")
     for c, s in results:
         print(f"  {c['id']}  score {s:.2f}  {c['question'][:70]}")
+        print(f"  {c['id']}  score {s:.2f}  {c['question'][:70]}  {c['url']}")

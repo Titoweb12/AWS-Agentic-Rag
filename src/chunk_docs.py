@@ -2,6 +2,21 @@ import json
 import pathlib
 import re
 
+URLS = {
+    "s3": "https://aws.amazon.com/s3/faqs/",
+    "ec2": "https://aws.amazon.com/ec2/faqs/",
+    "vpc": "https://aws.amazon.com/vpc/faqs/",
+    "iam": "https://aws.amazon.com/iam/faqs/",
+    "rds": "https://aws.amazon.com/rds/faqs/",
+    "lambda": "https://aws.amazon.com/lambda/faqs/",
+    "dynamodb": "https://aws.amazon.com/dynamodb/faqs/",
+    "cloudfront": "https://aws.amazon.com/cloudfront/faqs/",
+    "sqs": "https://aws.amazon.com/sqs/faqs/",
+    "elb": "https://aws.amazon.com/elasticloadbalancing/faqs/",
+}
+
+
+
 RAW = pathlib.Path("docs/raw")
 OUT = pathlib.Path("data")
 OUT.mkdir(exist_ok=True)
