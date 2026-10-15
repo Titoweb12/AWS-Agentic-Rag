@@ -1,7 +1,7 @@
 import json
 import pathlib
 import sys
-
+import faiss
 import anthropic
 import boto3
 import numpy as np
@@ -19,6 +19,8 @@ claude = anthropic.Anthropic()
 
 chunks = [json.loads(l) for l in open(DATA / "chunks.jsonl", encoding="utf-8")]
 vectors = np.load(DATA / "embeddings.npy")
+index = faiss.IndexFlatIP(vectors.shape[1])
+index.add(vectors)
 
 
 def embed(text):
@@ -27,10 +29,19 @@ def embed(text):
     return np.array(json.loads(resp["body"].read())["embedding"], dtype="float32")
 
 
-def retrieve(question):
-    scores = vectors @ embed(question)
-    best = np.argsort(scores)[::-1][:TOP_K]
-    return [(chunks[i], float(scores[i])) for i in best]
+def retrieve(question, service=None):
+    q = embed(question).reshape(1, -1)
+    k = len(chunks) if service else TOP_K
+    scores, ids = index.search(q, k)
+    out = []
+    for s, i in zip(scores[0], ids[0]):
+        c = chunks[i]
+        if service and c["service"] != service:
+            continue
+        out.append((c, float(s)))
+        if len(out) == TOP_K:
+            break
+    return out
 
 def rewrite(question):
     msg = claude.messages.create(
@@ -85,5 +96,5 @@ while True:
     print("\n" + text)
     print("\nChunks retrouvés :")
     for c, s in results:
-        print(f"  {c['id']}  score {s:.2f}  {c['question'][:70]}")
+        #print(f"  {c['id']}  score {s:.2f}  {c['question'][:70]}")
         print(f"  {c['id']}  score {s:.2f}  {c['question'][:70]}  {c['url']}")

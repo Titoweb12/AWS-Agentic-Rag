@@ -1,7 +1,6 @@
 import json
 import pathlib
 import re
-
 URLS = {
     "s3": "https://aws.amazon.com/s3/faqs/",
     "ec2": "https://aws.amazon.com/ec2/faqs/",
@@ -14,8 +13,6 @@ URLS = {
     "sqs": "https://aws.amazon.com/sqs/faqs/",
     "elb": "https://aws.amazon.com/elasticloadbalancing/faqs/",
 }
-
-
 
 RAW = pathlib.Path("docs/raw")
 OUT = pathlib.Path("data")
@@ -74,6 +71,7 @@ with open(OUT / "chunks.jsonl", "w", encoding="utf-8") as f:
                     "service": service,
                     "question": question,
                     "text": f"{question}\n{part}",
+                    "url": URLS[service],
                 }
                 f.write(json.dumps(record, ensure_ascii=False) + "\n")
                 count += 1
