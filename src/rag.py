@@ -87,14 +87,13 @@ def answer(question):
     text = "".join(b.text for b in msg.content if b.type == "text")
     return text, results
 
-
-while True:
-    q = input("\nQuestion (vide pour quitter) : ").strip()
-    if not q:
-        break
-    text, results = answer(q)
-    print("\n" + text)
-    print("\nChunks retrouvés :")
-    for c, s in results:
-        #print(f"  {c['id']}  score {s:.2f}  {c['question'][:70]}")
-        print(f"  {c['id']}  score {s:.2f}  {c['question'][:70]}  {c['url']}")
+if __name__ == "__main__":
+    while True:
+        q = input("\nQuestion (vide pour quitter) : ").strip()
+        if not q:
+            break
+        text, results = answer(q)
+        print("\n" + text)
+        print("\nChunks retrouvés :")
+        for c, s in results:
+            print(f"  {c['id']}  score {s:.2f}  {c['question'][:70]}  {c['url']}")

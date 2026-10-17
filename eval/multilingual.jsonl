@@ -1,0 +1,12 @@
+{"lang": "fr", "question": "Comment faire pour empêcher la suppression ou l'écrasement d'un fichier dans S3 pendant une durée donnée, par exemple pour respecter une obligation de conservation ?", "type": "answerable", "expected": ["What is Amazon S3 Object Lock?"]}
+{"lang": "fr", "question": "Quelle est la différence entre un security group et une network ACL ?", "type": "answerable", "expected": ["differences between security groups in a VPC and network"]}
+{"lang": "fr", "question": "Quelle est la taille maximale d'un objet S3 ?", "type": "answerable", "expected": ["How much data can I store in Amazon S3?"]}
+{"lang": "fr", "question": "Comment je fais pour activer les notifications d'événements S3 ?", "type": "answerable", "expected": ["How do I set up Amazon S3 Event Notifications?"]}
+{"lang": "it", "question": "Qual è la dimensione massima di un oggetto S3?", "type": "answerable", "expected": ["How much data can I store in Amazon S3?"]}
+{"lang": "it", "question": "Come posso far partire una funzione Lambda quando carico un oggetto su S3?", "type": "answerable", "expected": ["How do I set up Amazon S3 Event Notifications?"]}
+{"lang": "it", "question": "Qual è la differenza tra un security group e una network ACL?", "type": "answerable", "expected": ["differences between security groups in a VPC and network"]}
+{"lang": "it", "question": "Posso usare con CloudFront i miei certificati SSL/TLS di un'altra autorità di certificazione?", "type": "answerable", "expected": ["Does CloudFront Integrate with AWS Certificate Manager?"]}
+{"lang": "de", "question": "Wie groß darf ein S3-Objekt maximal sein?", "type": "answerable", "expected": ["How much data can I store in Amazon S3?"]}
+{"lang": "de", "question": "Was ist der Unterschied zwischen einer Security Group und einer Network ACL?", "type": "answerable", "expected": ["differences between security groups in a VPC and network"]}
+{"lang": "de", "question": "Wie kann ich verhindern, dass ein Objekt in S3 für einen bestimmten Zeitraum gelöscht oder überschrieben wird?", "type": "answerable", "expected": ["What is Amazon S3 Object Lock?"]}
+{"lang": "de", "question": "Sollte ich noch IAM-Benutzer verwenden?", "type": "answerable", "expected": ["What are IAM users and should I still be using them?"]}
