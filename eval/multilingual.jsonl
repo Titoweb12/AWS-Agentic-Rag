@@ -3,7 +3,7 @@
 {"lang": "fr", "question": "Quelle est la taille maximale d'un objet S3 ?", "type": "answerable", "expected": ["How much data can I store in Amazon S3?"]}
 {"lang": "fr", "question": "Comment je fais pour activer les notifications d'événements S3 ?", "type": "answerable", "expected": ["How do I set up Amazon S3 Event Notifications?"]}
 {"lang": "it", "question": "Qual è la dimensione massima di un oggetto S3?", "type": "answerable", "expected": ["How much data can I store in Amazon S3?"]}
-{"lang": "it", "question": "Come posso far partire una funzione Lambda quando carico un oggetto su S3?", "type": "answerable", "expected": ["How do I set up Amazon S3 Event Notifications?"]}
+{"lang": "it", "question": "Come posso far partire una funzione Lambda quando carico un oggetto su S3?", "type": "answerable", "expected": ["How do I set up Amazon S3 Event Notifications?", "What are Amazon S3 Event Notifications?"]}
 {"lang": "it", "question": "Qual è la differenza tra un security group e una network ACL?", "type": "answerable", "expected": ["differences between security groups in a VPC and network"]}
 {"lang": "it", "question": "Posso usare con CloudFront i miei certificati SSL/TLS di un'altra autorità di certificazione?", "type": "answerable", "expected": ["Does CloudFront Integrate with AWS Certificate Manager?"]}
 {"lang": "de", "question": "Wie groß darf ein S3-Objekt maximal sein?", "type": "answerable", "expected": ["How much data can I store in Amazon S3?"]}

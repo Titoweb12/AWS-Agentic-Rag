@@ -36,7 +36,7 @@
 {"question": "I'm running a security monitoring tool on a separate server, and I need to copy the network packets going to and from my EC2 instance so the tool can inspect them. Can I send a copy of that traffic to the tool without changing my application?", "type": "answerable", "service": "vpc", "expected": ["What is Amazon VPC traffic mirroring?"]}
 {"question": "Why can't my servers without a public address still get online to download updates?", "type": "answerable", "service": "vpc", "expected": ["How do instances without public IP addresses access the Internet?"]}
 {"question": "Can I enable VPC flow logs to track traffic going through a transit gateway?", "type": "answerable", "service": "vpc", "expected": ["Do VPC flow logs support AWS Transit Gateway?"]}
-{"question": "How can I trigger a Lambda function when an object is uploaded to S3?", "type": "answerable", "service": "s3", "expected": ["How do I set up Amazon S3 Event Notifications?"]}
+{"question": "How can I trigger a Lambda function when an object is uploaded to S3?", "type": "answerable", "service": "s3", "expected": ["How do I set up Amazon S3 Event Notifications?", "What are Amazon S3 Event Notifications?"]}
 {"question": "What is the maximum size of an S3 object?", "type": "answerable", "service": "s3", "expected": ["How much data can I store in Amazon S3?"]}
 {"question": "What is the difference between a security group and a network ACL?", "type": "answerable", "service": "vpc", "expected": ["differences between security groups in a VPC and network"]}
 {"question": "cloudfront VS NAcl?", "type": "answerable", "expected": ["What is Amazon CloudFront?", "differences between security groups in a VPC and network"], "match": "all"}

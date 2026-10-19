@@ -21,6 +21,8 @@ judge_client = anthropic.Anthropic()
 
 def load(path):
     return [json.loads(l) for l in open(path, encoding="utf-8") if l.strip()]
+def strip_sources(text):
+    return re.split(r"\n\s*Sources\s*:", text)[0].strip()    
 
 
 def found(row, passages):
@@ -38,6 +40,7 @@ def judge(question, passages, answer):
         "You grade the answer of a question-answering system.\n"
         "You get a QUESTION, the PASSAGES the system was given, and its ANSWER.\n"
         'Reply with JSON only: {"refused": true|false, "unsupported": <integer>, '
+        '"unsupported_claims": [<short quote of each unsupported claim>], '
         '"same_language": true|false}\n'
         "- refused: true if the answer declines to answer (says it does not know, "
         "that the question is out of scope, or that it is not covered). false if "
@@ -106,11 +109,12 @@ def main():
                                "lang": row.get("lang", "en")}
                         try:
                             o = fn(row["question"])
-                            j = judge(row["question"], o["used"], o["answer"])
+                            j = judge(row["question"], o["used"], strip_sources(o["answer"]))
                             rec.update(
                                 hit5=found(row, o["retrieved"]),
                                 hit_used=found(row, o["used"]),
                                 refused=bool(j.get("refused")),
+                                claims=j.get("unsupported_claims", []),
                                 unsupported=int(j.get("unsupported", 0)),
                                 same_language=bool(j.get("same_language")),
                                 reform=o["reform"], answer=o["answer"],
