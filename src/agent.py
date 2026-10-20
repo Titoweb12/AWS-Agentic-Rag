@@ -78,11 +78,18 @@ class State(TypedDict, total=False):
 # ---------- nœuds ----------
 def route_node(state):
     out = ask_json(
-        "Décide si la question porte sur AWS (S3, EC2, VPC, IAM, RDS, Lambda, "
-        "DynamoDB, CloudFront, SQS, ELB, ou AWS en général), et indique la langue "
-        "dans laquelle la question est écrite (par exemple English, French, Italian). "
-        'Réponds uniquement en JSON : {"route": "aws" ou "off_topic", "language": "..."}.\n\n'
-        f"Question : {state['question']}"
+        "Decide whether this question could be answered with AWS documentation. "
+        'Answer "aws" if it is about AWS, or about cloud and IT infrastructure '
+        "(hosting a website, storage, databases, networking, IP addresses, "
+        "load balancing, permissions, messaging, serverless), even when no AWS "
+        "service is named, because the user may be asking about their own AWS "
+        'setup. Answer "off_topic" only if the question is clearly unrelated '
+        "to cloud and IT infrastructure (sports, cooking, general knowledge), or "
+        "is about another provider's product (Azure, Google Cloud). "
+        "Also give the language the question is written in (for example English, "
+        'French, Italian). Reply with JSON only: {"route": "aws" or "off_topic", '
+        '"language": "..."}.\n\n'
+        f"Question: {state['question']}"
     )
     route = out.get("route", "aws")  # en cas de doute, on laisse passer
     language = out.get("language", "the same language as the question")
@@ -169,7 +176,7 @@ Maintenant, à toi.
 
 
 def grade_node(state):
-    listing = "\n".join(f"[{c['id']}] {c['text'][:700]}" for c, _ in state["passages"])
+    listing = "\n".join(f"[{c['id']}] {c['text']}" for c, _ in state["passages"])
     out = ask_json(
         GRADE_INSTRUCTIONS
         + FEWSHOT
