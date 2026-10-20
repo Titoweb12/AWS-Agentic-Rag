@@ -200,10 +200,18 @@ def after_grade(state):
 def generate_node(state):
     context = "\n\n".join(f"[{c['id']}]\n{c['text']}" for c in state["relevant"])
     text = ask(
-        "Answer the question using only the excerpts below. "
-        "Cite excerpt identifiers in square brackets, e.g. [s3-184]. "
-        f"Write the entire answer in {state['language']}, "
-        "whatever the language of the excerpts.\n\n"
+        "Answer the question using ONLY the excerpts below.\n"
+        "Rules:\n"
+        "- State only what the excerpts say. Do not guess causes, do not assume "
+        "what the user's situation probably is, and do not add advice that the "
+        "excerpts do not give.\n"
+        "- If the excerpts describe the general behaviour but not the user's "
+        "specific situation, give the general information and say clearly that "
+        "the excerpts do not cover that specific situation.\n"
+        "- Cite the excerpt identifiers in square brackets after each statement, "
+        "for example [s3-184].\n"
+        f"- Write the entire answer in {state['language']}, whatever the language "
+        "of the excerpts.\n\n"
         f"EXCERPTS:\n{context}\n\nQUESTION: {state['question']}",
         1000,
     )
