@@ -10,26 +10,27 @@ Dernière mise à jour : 20 octobre 2026.
 - Fidélité : toutes les affirmations de la réponse sont explicitement dans les passages donnés. Jugée par Claude Haiku, la même famille de modèle que le générateur.
 - La ligne « Sources » est retirée de la réponse avant le juge.
 
+
 ## Résultats finaux (3 essais, 46 questions à réponse)
 
-| Mesure | RAG naïf | Agent, avant corrections (1 essai) | Agent, après corrections |
+| Mesure | RAG naïf (prompt d'origine) | RAG naïf (prompt strict) | Agent |
 |---|---|---|---|
-| hit@5 | 96 % | 89 % | 97 % |
-| Bon passage utilisé | 96 % | 83 % | 95 % |
-| Réponse donnée | 99 % | 85 % | 96 % |
-| Fidélité | 84 % | 77 % | 98 % |
+| hit@5 | 96 % | 95 % | 97 % |
+| Bon passage utilisé | 96 % | 95 % | 95 % |
+| Réponse donnée | 99 % | 99 % | 96 % |
+| Fidélité | 84 % | 96 % | 98 % |
 | Langue correcte | 81 % | 100 % | 100 % |
 | Refus attendus | 100 % | 100 % | 100 % |
-| Reformulations (moyenne) | - | 0,19 | 0,12 |
+| Reformulations (moyenne) | - | - | 0,12 |
+| Appels au modèle par question | 2 | 2 | 4 minimum |
 
 ## Multilingue (hit@5 / langue correcte, 4 questions par langue, 3 essais)
 
-| Langue | RAG naïf | Agent |
-|---|---|---|
-| fr | 100 % / 100 % | 100 % / 100 % |
-| it | 83 % / 100 % | 100 % / 100 % |
-| de | 100 % / 75 % | 100 % / 92 % |
-
+| Langue | RAG naïf (d'origine) | RAG naïf (prompt strict) | Agent |
+|---|---|---|---|
+| fr | 100 % / 100 % | 100 % / 100 % | 100 % / 100 % |
+| it | 83 % / 100 % | 75 % / 100 % | 100 % / 100 % |
+| de | 100 % / 75 % | 100 % / 100 % | 100 % / 92 % |
 ## Corrections apportées à l'agent
 
 1. Le juge de pertinence reçoit le passage entier (il était tronqué à 700 caractères).
@@ -44,7 +45,7 @@ Dernière mise à jour : 20 octobre 2026.
 ## Limites
 
 - Les corrections ont été choisies en regardant les échecs de ce même jeu de questions : risque de sur-ajustement.
-- Le prompt de l'agent est plus strict que celui du RAG naïf : le gain de fidélité ne peut pas être attribué au seul graphe.
+- Contrôle effectué : le RAG naïf avec le même prompt strict que l'agent atteint 96 % de fidélité et 100 % de langue correcte. L'essentiel du gain de l'agent vient donc du prompt, pas du graphe. L'agent garde un avantage marginal (cas Lambda et S3, italien) au prix d'au moins deux fois plus d'appels au modèle.
 - 46 questions répétées 3 fois ne valent pas 138 questions indépendantes.
 - 46 questions sur 50 viennent de passages du corpus : hit@5 est optimiste.
 - Peu de questions demandent plusieurs étapes : la boucle de reformulation est presque inutilisée.

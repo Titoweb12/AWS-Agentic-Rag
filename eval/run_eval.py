@@ -15,6 +15,8 @@ import anthropic  # noqa: E402
 import agent  # noqa: E402
 import rag  # noqa: E402
 
+import rag_strict  # noqa: E402
+
 JUDGE_MODEL = "claude-haiku-5-5"
 judge_client = anthropic.Anthropic()
 
@@ -61,9 +63,9 @@ def judge(question, passages, answer):
     return json.loads(m.group(0))
 
 
-def run_naive(question):
+def run_naive(question, mod=rag):
     with contextlib.redirect_stdout(io.StringIO()):
-        text, results = rag.answer(question)
+        text, results = mod.answer(question)
     retrieved = [c for c, _ in results]
     skipped = text.startswith(("Cette question ne semble pas", "Je n'ai pas compris"))
     return {"answer": text, "retrieved": retrieved,
@@ -87,12 +89,19 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--runs", type=int, default=1)
     ap.add_argument("--limit", type=int, default=0, help="N premières questions de chaque jeu")
+    ap.add_argument("--systems", default="naif,agent")
+
     args = ap.parse_args()
 
     sets = {"main": load("eval/questions.jsonl"), "multi": load("eval/multilingual.jsonl")}
     if args.limit:
         sets = {k: v[:args.limit] for k, v in sets.items()}
-    systems = {"naif": run_naive, "agent": run_agent}
+    all_systems = {
+        "naif": run_naive,
+        "agent": run_agent,
+        "naif_strict": lambda q: run_naive(q, rag_strict),
+    }
+    systems = {k: v for k, v in all_systems.items() if k in args.systems.split(",")}
 
     out_dir = pathlib.Path("eval/results")
     out_dir.mkdir(exist_ok=True)
@@ -130,7 +139,7 @@ def main():
 
 
 def report(records):
-    for sname in ("naif", "agent"):
+    for sname in dict.fromkeys(r["system"] for r in records):
         mine = [r for r in records if r["system"] == sname]
         errors = [r for r in mine if "error" in r]
         ok = [r for r in mine if "error" not in r]
