@@ -73,6 +73,7 @@ Full tables, multilingual results and limitations: [`eval/baseline.md`](eval/bas
 - The faithfulness judge is a model of the same family as the generator and sometimes flags trivial sentences.
 - A persistent failure: "How do I enable S3 event notifications?" is refused by the agent in 3 of 3 runs.
 - FAQ pages answer "what is X" well and integration scenarios between services poorly.
+- The refusal message of the naive pipeline is written in French only, whatever the question language.
 
 ## Run it
 
@@ -101,6 +102,7 @@ python src/chunk_docs.py        # build data/chunks.jsonl
 python src/embed_chunks.py      # embed the chunks with Titan (about a cent)
 python src/rag.py               # naive RAG
 python src/agent.py             # LangGraph agent
+streamlit run src/app.py        # web interface (agent or naive RAG)
 ```
 
 Run the evaluation:
@@ -118,7 +120,7 @@ The FAQ texts belong to AWS and are not stored in this repository: `docs/raw/` a
 ## Repository layout
 
 ```
-src/        collect_docs, chunk_docs, embed_chunks, rag, rag_strict, agent
+src/        collect_docs, chunk_docs, embed_chunks, rag, rag_strict, agent, app
 eval/       questions.jsonl, multilingual.jsonl, run_eval.py, analyze.py, baseline.md
 ```
 
