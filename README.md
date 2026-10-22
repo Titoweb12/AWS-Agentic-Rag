@@ -103,7 +103,18 @@ python src/embed_chunks.py      # embed the chunks with Titan (about a cent)
 python src/rag.py               # naive RAG
 python src/agent.py             # LangGraph agent
 streamlit run src/app.py        # web interface (agent or naive RAG)
+
 ```
+### With Docker
+
+The image contains the code only. The data folder is mounted at run time and the API keys come from your `.env` file.
+
+```
+docker build --load -t aws-agentic-rag .
+docker run --rm -p 8501:8501 --env-file .env -v "$(pwd)/data:/app/data:ro" aws-agentic-rag
+```
+
+Then open http://localhost:8501. On Windows Git Bash, prefix the second command with `MSYS_NO_PATHCONV=1` and use `$(pwd -W)` instead of `$(pwd)`.
 
 Run the evaluation:
 
@@ -120,6 +131,7 @@ The FAQ texts belong to AWS and are not stored in this repository: `docs/raw/` a
 ## Repository layout
 
 ```
+Dockerfile  image that runs the Streamlit app
 src/        collect_docs, chunk_docs, embed_chunks, rag, rag_strict, agent, app
 eval/       questions.jsonl, multilingual.jsonl, run_eval.py, analyze.py, baseline.md
 ```
