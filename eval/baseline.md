@@ -42,6 +42,33 @@ Dernière mise à jour : 20 octobre 2026.
 - La ligne « Sources » était envoyée au juge de fidélité, ce qui faussait le score de l'agent (46 % mesuré au premier passage, contre 77 % après correction).
 - Une question sur Lambda et S3 attendait un seul passage alors que deux répondaient : l'étiquette a été corrigée pour les deux systèmes.
 
+## Jeu inédit (18 questions, figé avant la mesure, 3 essais)
+
+16 questions à réponse (13 simples, 3 qui demandent deux services) et 2 refus attendus.
+
+| Mesure | RAG naïf (d'origine) | RAG naïf (strict) | Agent |
+|---|---|---|---|
+| hit@5 | 75 % | 77 % | 73 % |
+| Bon passage utilisé | 75 % | 77 % | 71 % |
+| Réponse donnée | 98 % | 100 % | 85 % |
+| Fidélité | 81 % | 96 % | 98 % |
+| Langue correcte | 81 % | 100 % | 100 % |
+| Refus attendus (2 questions) | 67 % | 50 % | 100 % |
+
+Séparation questions simples et questions à deux services :
+
+| Système | Simples : passage utilisé | Simples : réponse donnée | Simples : fidélité | Deux services : réponse donnée | Deux services : fidélité |
+|---|---|---|---|---|---|
+| RAG naïf (d'origine) | 92 % | 97 % | 84 % | 100 % | 67 % |
+| RAG naïf (strict) | 95 % | 100 % | 95 % | 100 % | 100 % |
+| Agent | 87 % | 100 % | 97 % | 22 % | 100 % |
+
+- Le gain de fidélité et de langue dû au prompt strict se reproduit sur des questions inédites.
+- Aucun avantage de l'agent sur la recherche : sur les questions simples il est un peu en dessous (environ une question sur 13).
+- Aucun système ne retrouve les deux passages d'une question à deux services : une seule recherche ne couvre pas deux sujets. Le RAG naïf strict répond partiellement en signalant ce qui manque, l'agent refuse dans 7 essais sur 9.
+- Refus attendus : le RAG naïf strict signale que Google Cloud n'est pas couvert puis ajoute des informations sur S3, ce que le juge compte comme une réponse. Sur 2 questions, ce n'est pas un résultat significatif.
+
+
 ## Limites
 
 - Les corrections ont été choisies en regardant les échecs de ce même jeu de questions : risque de sur-ajustement.

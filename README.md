@@ -65,10 +65,14 @@ Full tables, multilingual results and limitations: [`eval/baseline.md`](eval/bas
 - **Some of the early numbers were measurement errors.** The agent's answers ended with a "Sources" line that the faithfulness judge counted as unsupported claims; the agent's first faithfulness score was 46%, and 77% once that was fixed. One test question also expected a single passage while two were valid.
 - **Where the agent still helps:** a question about triggering a Lambda function from an S3 upload (the naive pipeline misses it in most runs, because the question does not use the AWS term "event notifications"), and one Italian question.
 
+- **The main finding holds on unseen questions.** On a second set of 18 questions, frozen before any measurement, the strict prompt again gives about 96% faithfulness against 81%, and answers in the question's language 100% of the time against 81%.
+- **The agent shows no retrieval advantage.** On single-topic questions the three pipelines are within one question of each other (expected passage used: 92%, 95% and 87%).
+- **Questions that need two services fail everywhere.** One search cannot retrieve passages for two topics, and no pipeline found both. The naive pipelines still answer, partially (with the strict prompt, faithfully and saying what is not covered); the agent's grader refuses in 7 of 9 trials. Splitting such questions into sub-questions is the next step.
+
 ### Known limits
 
-- The corrections were chosen by looking at failures of this same question set, so the final numbers are optimistic. A set of unseen questions is still to do.
-- Few questions need several steps, so the rewrite loop is rarely used (0.12 rewrites per question).
+- The corrections were chosen by looking at the failures of the first question set. A second set (18 questions, frozen before measuring) confirmed the main findings, but both sets were generated from the corpus, so real user questions will be harder.
+- Questions that need two services are not handled: one search cannot retrieve both topics, and the agent's grader refuses most of them (3 questions in the held-out set).
 - 46 questions repeated 3 times are not 138 independent questions.
 - The faithfulness judge is a model of the same family as the generator and sometimes flags trivial sentences.
 - A persistent failure: "How do I enable S3 event notifications?" is refused by the agent in 3 of 3 runs.

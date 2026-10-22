@@ -90,10 +90,13 @@ def main():
     ap.add_argument("--runs", type=int, default=1)
     ap.add_argument("--limit", type=int, default=0, help="N premières questions de chaque jeu")
     ap.add_argument("--systems", default="naif,agent")
+    ap.add_argument("--holdout", action="store_true")
 
     args = ap.parse_args()
 
     sets = {"main": load("eval/questions.jsonl"), "multi": load("eval/multilingual.jsonl")}
+    if args.holdout:
+        sets = {"main": load("eval/holdout.jsonl")}
     if args.limit:
         sets = {k: v[:args.limit] for k, v in sets.items()}
     all_systems = {
